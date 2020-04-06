@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>Arbol.h</itemPath>
+      <itemPath>Create.h</itemPath>
+      <itemPath>Insert.h</itemPath>
+      <itemPath>ListaCadena.h</itemPath>
+      <itemPath>ManejadorCadenas.h</itemPath>
+      <itemPath>ManejadorQuery.h</itemPath>
+      <itemPath>Select.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>Arbol.cpp</itemPath>
+      <itemPath>Create.cpp</itemPath>
+      <itemPath>Insert.cpp</itemPath>
+      <itemPath>ListaCadena.cpp</itemPath>
+      <itemPath>ManejadorCadenas.cpp</itemPath>
+      <itemPath>ManejadorQuery.cpp</itemPath>
+      <itemPath>Select.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+      </compileType>
+      <item path="Arbol.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Arbol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Create.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Create.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Insert.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Insert.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaCadena.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaCadena.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorCadenas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorCadenas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorQuery.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorQuery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Select.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Select.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="Arbol.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Arbol.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Create.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Create.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Insert.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Insert.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaCadena.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaCadena.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorCadenas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorCadenas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorQuery.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorQuery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Select.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Select.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
