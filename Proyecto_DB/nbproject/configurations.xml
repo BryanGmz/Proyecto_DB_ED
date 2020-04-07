@@ -8,7 +8,12 @@
       <itemPath>Create.h</itemPath>
       <itemPath>Insert.h</itemPath>
       <itemPath>ListaCadena.h</itemPath>
+      <itemPath>ListaColumnas.h</itemPath>
+      <itemPath>ListaDeDB.h</itemPath>
+      <itemPath>ListaHash.h</itemPath>
+      <itemPath>ListaTablas.h</itemPath>
       <itemPath>ManejadorCadenas.h</itemPath>
+      <itemPath>ManejadorHash.h</itemPath>
       <itemPath>ManejadorQuery.h</itemPath>
       <itemPath>Select.h</itemPath>
     </logicalFolder>
@@ -23,7 +28,12 @@
       <itemPath>Create.cpp</itemPath>
       <itemPath>Insert.cpp</itemPath>
       <itemPath>ListaCadena.cpp</itemPath>
+      <itemPath>ListaColumnas.cpp</itemPath>
+      <itemPath>ListaDeDB.cpp</itemPath>
+      <itemPath>ListaHash.cpp</itemPath>
+      <itemPath>ListaTablas.cpp</itemPath>
       <itemPath>ManejadorCadenas.cpp</itemPath>
+      <itemPath>ManejadorHash.cpp</itemPath>
       <itemPath>ManejadorQuery.cpp</itemPath>
       <itemPath>Select.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -66,9 +76,29 @@
       </item>
       <item path="ListaCadena.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ListaColumnas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaColumnas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaDeDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaDeDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaHash.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaHash.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaTablas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaTablas.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ManejadorCadenas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ManejadorCadenas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorHash.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorHash.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ManejadorQuery.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -117,9 +147,29 @@
       </item>
       <item path="ListaCadena.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ListaColumnas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaColumnas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaDeDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaDeDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaHash.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaHash.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ListaTablas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ListaTablas.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ManejadorCadenas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ManejadorCadenas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ManejadorHash.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ManejadorHash.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ManejadorQuery.cpp" ex="false" tool="1" flavor2="0">
       </item>

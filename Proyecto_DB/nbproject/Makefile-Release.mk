@@ -39,7 +39,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/Create.o \
 	${OBJECTDIR}/Insert.o \
 	${OBJECTDIR}/ListaCadena.o \
+	${OBJECTDIR}/ListaColumnas.o \
+	${OBJECTDIR}/ListaDeDB.o \
+	${OBJECTDIR}/ListaHash.o \
+	${OBJECTDIR}/ListaTablas.o \
 	${OBJECTDIR}/ManejadorCadenas.o \
+	${OBJECTDIR}/ManejadorHash.o \
 	${OBJECTDIR}/ManejadorQuery.o \
 	${OBJECTDIR}/Select.o \
 	${OBJECTDIR}/main.o
@@ -89,10 +94,35 @@ ${OBJECTDIR}/ListaCadena.o: ListaCadena.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListaCadena.o ListaCadena.cpp
 
+${OBJECTDIR}/ListaColumnas.o: ListaColumnas.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListaColumnas.o ListaColumnas.cpp
+
+${OBJECTDIR}/ListaDeDB.o: ListaDeDB.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListaDeDB.o ListaDeDB.cpp
+
+${OBJECTDIR}/ListaHash.o: ListaHash.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListaHash.o ListaHash.cpp
+
+${OBJECTDIR}/ListaTablas.o: ListaTablas.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListaTablas.o ListaTablas.cpp
+
 ${OBJECTDIR}/ManejadorCadenas.o: ManejadorCadenas.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ManejadorCadenas.o ManejadorCadenas.cpp
+
+${OBJECTDIR}/ManejadorHash.o: ManejadorHash.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ManejadorHash.o ManejadorHash.cpp
 
 ${OBJECTDIR}/ManejadorQuery.o: ManejadorQuery.cpp
 	${MKDIR} -p ${OBJECTDIR}

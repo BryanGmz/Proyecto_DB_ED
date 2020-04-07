@@ -30,7 +30,6 @@ typedef struct NodoHoja{
     
     string valor;//Valor de la hoja
     string columna;//Columna donde se encuentra el valor
-    
 } NodoHoja;
 
 
@@ -39,7 +38,7 @@ public:
     Arbol();
     Arbol(const Arbol& orig);
     virtual ~Arbol();
-    void ingresarDatosHoja(string, string, int);
+    bool ingresarDatosHoja(string, string, int);//Nueva hoja string
     void insertarHoja(NodoHoja*, NodoHoja*, NodoHoja*);
     void equilibrar(NodoHoja *);
     void rotarDD(NodoHoja *, NodoHoja *);

@@ -80,7 +80,11 @@ void ListaCadena::insertarInsert(string valor, string insertarColumna) {
 }
 
 int ListaCadena::size() {
-    return (ultimo->indice + 1);
+    if (primero != NULL) {
+        return (ultimo->indice + 1);
+    } else {
+        return 0;
+    }
 }
 
 

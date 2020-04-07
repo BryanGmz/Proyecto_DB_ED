@@ -79,11 +79,16 @@ void ManejadorQuery::realizarTerceraParte(string terceraParte, Insert &it, Manej
     if (totalVector > 0) {
         manejador.split(temp.GetNodo(0)->dato, *",", Tempo, totalVector);
         insertarALista(totalVector, temp, Tempo);
-        for (int i = 0; i < totalVector; i++) {
-            limpiarCadenaDeEspacios(0, temp.GetNodo(i)->dato);
-            limpiarCadenaDeEspaciosFinales(temp.GetNodo(i)->dato);
-            it.listaColumnas.GetNodo(i)->dato = temp.GetNodo(i)->dato;//Agregando los Valores
-        } 
+        if (totalVector > it.listaColumnas.size()) {
+            it.listaColumnas.~ListaCadena();
+            cout<<"\n ERROR: Lo siento error en la sintaxis aun falta una columna, para poder agregarle los valores. \n Vuelve a verficar tu entrada."<<endl<<endl;
+        } else {
+            for (int i = 0; i < totalVector; i++) {
+                limpiarCadenaDeEspacios(0, temp.GetNodo(i)->dato);
+                limpiarCadenaDeEspaciosFinales(temp.GetNodo(i)->dato);
+                it.listaColumnas.GetNodo(i)->dato = temp.GetNodo(i)->dato;//Agregando los Valores
+            } 
+        }
     } 
 }
 

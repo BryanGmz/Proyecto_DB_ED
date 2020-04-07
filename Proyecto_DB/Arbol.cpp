@@ -43,7 +43,7 @@ void Arbol::setRaiz(NodoHoja* raiz) {
 //Valor de la hoja 
 //Columna del valor
 //Dato es con el que se guardara en el arbol AVL
-void Arbol::ingresarDatosHoja(string valor, string columna, int dato) {
+bool Arbol::ingresarDatosHoja(string valor, string columna, int dato) {
     NodoHoja* recorrer = raiz;//Nodo a recorrer 
     NodoHoja* nuevaHoja;
     NodoHoja* padreAnterior;//Padre anterior
@@ -51,8 +51,10 @@ void Arbol::ingresarDatosHoja(string valor, string columna, int dato) {
     if (!comprobarExistencia(recorrer, nuevaHoja->dato)) {
         padreAnterior = raiz;
         insertarHoja(recorrer, nuevaHoja, padreAnterior);
+        return true;//Significa que a sido ingresado con exito
     } else {
-        cout<<"Ya existe en el arbol"<<endl;
+//        cout<<"Ya existe en el arbol"<<endl;
+        return false;//Significa que hay una colision retorna false
     }
 }
 
@@ -93,8 +95,6 @@ void Arbol::insertarHoja(NodoHoja *recorrer, NodoHoja* nuevaHoja, NodoHoja *Padr
 
 void Arbol::equilibrar(NodoHoja *recorrer) {
     if (recorrer != NULL) {
-//        equilibrar(recorrer->izquierdo);//Por si se necesita equilibra la hoja izquierda
-//        equilibrar(recorrer->derecho);//Por si se necesitan equilibrar la hoja derecha
         if ((recorrer->fe == 2) || (recorrer->fe == -2))  {//Significa que es necesario equilibrar el arbol
             cout<<"Es necesario equilibrar el arbol"<<endl;
             NodoHoja *PadreAnterior = recorrer;

@@ -32,10 +32,10 @@ public:
     ListaCadena(const ListaCadena& orig);
     virtual ~ListaCadena();
     Nodo* GetPrimero() const;
-    void SetPrimero(Nodo*);
     Nodo* GetUltimo() const;
     Nodo* GetNodo(int);
     int size();
+    void SetPrimero(Nodo*);
     void SetUltimo(Nodo*);
     void insertar(string, int);
     void insertarInsert(string, string);
