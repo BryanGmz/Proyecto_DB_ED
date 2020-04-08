@@ -35,6 +35,7 @@ public:
     NodoColumna* GetNodo(int);
     NodoColumna* buscarColumna(string);
     int size();
+    int cantidadDatos();
     void insertarColumna(string, int);//Ingresar una nueva columna a la tabla
     void eliminarColumna(NodoColumna*&);
     void desplegarColumnas();

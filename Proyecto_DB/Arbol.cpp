@@ -287,14 +287,162 @@ bool Arbol::comprobarExistencia(NodoHoja* recorrer, int datoBuscando) {
 }
 
 //Recorrido preOrden
-void Arbol::preorden(NodoHoja *recorrer){
+void Arbol::preorden(NodoHoja *recorrer){//Mostrar
     if (recorrer != NULL) {
         cout<<"\nLlave: "<<recorrer->dato<<endl;
         cout<<"Valor: "<<recorrer->valor<<endl;
-        cout<<"Columna: "<<recorrer->columna<<endl;
+//        cout<<"Columna: "<<recorrer->columna<<endl;
         preorden(recorrer->izquierdo);
         preorden(recorrer->derecho);
     }
+}
+
+int Arbol::tipoDato(string cadena){
+    if (digito(cadena)) {
+        return 3;
+    } else if  (decimal(cadena)) {
+        return 4;
+    } else {
+        if (cadena.length() == 1) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+}
+
+bool Arbol::digito(string comprobar){
+    for (int i = 0; i < comprobar.length(); i++) {
+        if (!isdigit(comprobar[i])) {
+            return false;
+        }
+    } return true;
+}
+
+bool Arbol::decimal(string comprobar){
+    bool banderaPunto = false;
+    for (int i = 0; i < comprobar.length(); i++) {
+        if (!isdigit(comprobar[i])) {
+            if (comprobar[i] != '.') {
+                return false;
+            } else {
+                if (banderaPunto == true || comprobar[0] == '.') {
+                    return false;
+                } else {
+                    banderaPunto = true;
+                }
+            }
+        }
+    } return true;
+}
+
+string Arbol::seleccionar(NodoHoja *recorrer, string cadena, bool comprobacion, int tipoCondicion) {
+    if (recorrer != NULL) {
+        if (comprobacion) {
+            string retornar = "";
+            string aux = seleccionar(recorrer->izquierdo, cadena, true, tipoCondicion);
+            if (aux[0] != '\0') {
+                retornar += aux;
+            }
+            if (validarCondicion(cadena, tipoDato(cadena), recorrer->valor, tipoCondicion)) {
+                retornar += recorrer->valor + "\n";
+            }
+            aux = seleccionar(recorrer->derecho,  cadena, true, tipoCondicion);
+            if (aux[0] != '\0') {
+                retornar += aux;
+            }
+            return retornar;
+        } else {
+            string retornar = "";
+            string aux = seleccionar(recorrer->izquierdo, "", false, 0);
+            if (aux[0] != '\0') {
+                retornar += aux;
+            }
+            retornar += recorrer->valor + "\n";
+            aux = seleccionar(recorrer->derecho, "", false, 0);
+            if (aux[0] != '\0') {
+                retornar += aux;
+            }
+            return retornar;
+        }
+    } else {
+        return "\0";
+    }
+}
+
+int Arbol::charANumero(char convertir){
+    return convertir;
+}
+
+bool Arbol::validarCondicion(string cadena, int tipoDato, string comprobacion, int tipoCondicion) {
+    switch (tipoCondicion) {
+        case 1://Condicional Igual
+            switch (tipoDato){
+                case 1:
+                    return (cadena.length() == comprobacion.length());
+                case 2:
+                    return (cadena[0] == comprobacion[0]);
+                case 3:
+                    return (atoi(cadena.c_str()) == atoi(comprobacion.c_str()));
+                case 4:
+                    return (atof(cadena.c_str()) == atof(comprobacion.c_str()));
+            }
+        case 2://Condicional menor
+            switch (tipoDato){
+                case 1:
+                    return (comprobacion.length() < cadena.length());
+                case 2:
+                    return (charANumero(comprobacion[0]) < charANumero(cadena[0]));
+                case 3:
+                    return (atoi(comprobacion.c_str()) < atoi(cadena.c_str()));
+                case 4:
+                    return (atof(comprobacion.c_str()) < atof(cadena.c_str()));
+            }
+        case 3:
+            switch (tipoDato){
+                case 1:
+                    return (comprobacion.length() > cadena.length());
+                case 2:
+                    return (charANumero(comprobacion[0]) > charANumero(cadena[0]));
+                case 3:
+                    return (atoi(comprobacion.c_str()) > atoi(cadena.c_str()));
+                case 4:
+                    return (atof(comprobacion.c_str()) > atof(cadena.c_str()));
+            }
+        case 4:
+            switch (tipoDato){
+                case 1:
+                    return (comprobacion.length() <= cadena.length());
+                case 2:
+                    return (charANumero(comprobacion[0]) <= charANumero(cadena[0]));
+                case 3:
+                    return (atoi(comprobacion.c_str()) <= atoi(cadena.c_str()));
+                case 4:
+                    return (atof(comprobacion.c_str()) <= atof(cadena.c_str()));
+            }
+        case 5:
+            switch (tipoDato){
+                case 1:
+                    return (comprobacion.length() >= cadena.length());
+                case 2:
+                    return (charANumero(comprobacion[0]) >= charANumero(cadena[0]));
+                case 3:
+                    return (atoi(comprobacion.c_str()) >= atoi(cadena.c_str()));
+                case 4:
+                    return (atof(comprobacion.c_str()) >= atof(cadena.c_str()));
+            }
+        case 6:
+            switch (tipoDato){
+                case 1:
+                    return (comprobacion.length() != cadena.length());
+                case 2:
+                    return (charANumero(comprobacion[0]) != charANumero(cadena[0]));
+                case 3:
+                    return (atoi(comprobacion.c_str()) != atoi(cadena.c_str()));
+                case 4:
+                    return (atof(comprobacion.c_str()) != atof(cadena.c_str()));
+            }
+    } return false;
 }
 
 //Recorrido InOrden

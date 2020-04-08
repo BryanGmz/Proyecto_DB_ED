@@ -133,3 +133,10 @@ int ListaTablas::size() {
         return 0;
     }
 }
+
+int ListaTablas::cantidadDatos() {
+    int retornar = 0;
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->listaColumnas.cantidadDatos();
+    }
+}

@@ -56,8 +56,15 @@ public:
     int getCantidadDatosArbol() const;
     void setCantidadDatosArbol(int cantidadDatosArbol);
     NodoHoja* getRaiz() const;
+    bool digito(string);
+    bool decimal(string);
+    int tipoDato(string);
     void setRaiz(NodoHoja* raiz);
-
+    int charANumero(char);
+    bool validarCondicion(string, int, string, int);
+    string seleccionar(NodoHoja *, string, bool, int);
+    //Retorna la lista seleccionada, la cadena de la condicional, bandera si viene con condicional, tiṕ de dato para realizar la comparacion
+    
 private:
     int cantidadDatosArbol;
     NodoHoja* raiz;//Este es el Nodo Raiz

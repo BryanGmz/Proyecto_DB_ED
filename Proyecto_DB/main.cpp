@@ -16,6 +16,9 @@
 #include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
+#include <ctime>
+#include <time.h>
+#include <cstring>
 #include "ManejadorCadenas.h"
 #include "ManejadorHash.h"
 #include "ListaCadena.h"
@@ -29,6 +32,7 @@
 #include "Select.h"
 #include "Arbol.h"
 
+
 using namespace std;
 
 void querys(string, ManejadorCadenas);
@@ -39,37 +43,29 @@ void crearDB();
 void cambiarDB();
 void queryCrear(Create &crear);
 void queryInsert(Insert &insert);
+void querySelect(Select &select);
+void realizarSelect(Select &, NodoTabla *, NodoColumna *, ListaCadena &);
 int colisionLineal(int, int);
 bool comprobarElTipoDatoColumna(int, string);
 bool esCaracter(string);
 bool esDecimal(string);
 bool esNumero(string);
+void imprimirSelect(ListaCadena &);
+void limpiarCadena(int, ListaCadena &, vector<string>);
+void ingresarAlLog(string concatenar);
+void cantidadDatosDB();
 ListaDeDB listaDB = ListaDeDB();
 ManejadorQuery manejadorQuery = ManejadorQuery();
 ManejadorHash manejadorHash = ManejadorHash();
+ManejadorCadenas manejadorCadenas = ManejadorCadenas();
 NodoDB *DBActual;
+string logSalida = "";
 
 int main(int argc, char** argv) {
+    ingresarAlLog("Starting all servers...");
+    ingresarAlLog("Starting Guatemala's Database...");
     menu();
-//    Arbol arbol = Arbol();
-//    string valor = "";
-//    string columna = "";
-//    int contador;
-//    int opcion = 1;
-//    while (opcion != 0) {
-////        cout<<"Ingresa valor:"<<endl;
-////        getline(cin, valor, '\n');
-////        cout<<"Ingresa columna:"<<endl;
-////        getline(cin, columna, '\n');
-//        cout<<"Ingrese Llave: "<<endl;
-//        scanf("%d", &contador);
-//        arbol.ingresarDatosHoja(valor, columna, contador);
-//        
-//        arbol.verArbol(arbol.getRaiz(), 0);
-////        cout<<"Cantidad de Datos: "<<arbol.getCantidadDatosArbol()<<endl;
-////        arbol.inorden(arbol.getRaiz());
-//        contador++;
-//    }
+    
     return 0;
 }
 
@@ -141,7 +137,7 @@ void menuReportes() {
         cout<<("\n|-------------------------------------------|");
         cout<<("\n| 1. Cantidad de datos en todas las DB      |");
         cout<<("\n|-------------------------------------------|");
-        cout<<("\n| 2. Cantidad de datos                      |");
+        cout<<("\n| 2. Cantidad de datos en DB                |");
         cout<<("\n|-------------------------------------------|");
         cout<<("\n| 3. Cantidad de filas de un mismo tipo de  |");
         cout<<("\n|    dato en una tabla                      |");
@@ -157,14 +153,23 @@ void menuReportes() {
         scanf("%d", &opcion);
         switch (opcion) {
             case 1:
+                cantidadDatosDB();
                 break;
             case 2:
+                if (DBActual != NULL) {
+                    cout<<"\n\nDB: << "<<DBActual->nombreDB<<" >> DATOS: "<<DBActual->listaTablas.cantidadDatos()<<endl;
+                } else {
+                    cout<<"\n Ninguna DB"<<endl;
+                }
                 break;
             case 3:
                 break;
             case 4:
+                cout<<"\n\nDB: << "<<DBActual->nombreDB<<" >> Columnas: "<<DBActual->listaTablas.size()<<endl;
                 break;
             case 5:
+                cout<<"\n\nArchivo Log..."<<endl<<endl;
+                cout<<logSalida<<endl;
                 break;
             case 6:
                 menu();
@@ -182,36 +187,25 @@ void querys(string valor, ManejadorCadenas mc){
         for (int i = 0; i < valor.length(); i++) {
             if (valor[i] != ' ') {
                 if ((valor[i] == 'S' || valor[i] == 's') && (valor[i + 5] == 'T' || valor[i + 5] == 't')) {
-                    cout<<"-> Select <-"<<endl;
                     Select sel = Select(); 
                     manejadorQuery.select(valor, mc, sel);
-                    cout<<"\n\nDatos: Seleccionar"<<endl;
-                    if (!sel.IsTodosCampos()) {
-                        sel.listaColumnas.desplegarLista();
-                    } else {
-                        cout<<"Todos los campos: "<<endl;
-                    }
-                    cout<<"Tabla: "<<sel.GetNombreTabla()<<endl;
-                    if (!sel.IsSinCondicional()) {
-                        cout<<"Columna: "<<sel.GetColumnaCodicion()<<endl;
-                        cout<<"Condicion: "<<sel.GetCondicional()<<endl;
-                    } cout<<"";
+                    querySelect(sel);
+                    ingresarAlLog(" Query Realizada Select << " + valor + " >>...");
+                    cout<<"";
                 } else if ((valor[i] == 'C' || valor[i] == 'c') && (valor[i + 5] == 'E' || valor[i + 5] == 'e')){
-//                    cout<<"-> Create <-"<<endl;
                     Create crear = manejadorQuery.create(valor, mc);
-//                    cout<<"\n\nDatos Crear: "<<endl;
-//                    cout<<"Tabla: "<<crear.GetNombreTabla()<<endl;
-//                    crear.lista.desplegarLista();
                     queryCrear(crear);
+                    ingresarAlLog(" Query Realizada Create << " + valor + " >>...");
                     cout<<"";
                 } else if ((valor[i] == 'I' || valor[i] == 'i') && (valor[i + 5] == 'T' || valor[i + 5] == 't')){
-//                    cout<<"-> Insert <-"<<endl;
                     Insert inserte = Insert();
                     manejadorQuery.insert(valor, mc, inserte);
                     if (inserte.listaColumnas.size() != 0) {
                         queryInsert(inserte);
+                        ingresarAlLog(" Query Realizada Insert << " + valor + " >>...");
                     } cout<<"";
                 } else {
+                    ingresarAlLog(" ERROR: Query Instruccion Incorrecta << " + valor + " >>...");
                     cout<<" ERROR: Instruccion Incorecta.\n Vuelve a revisar tu entrada."<<endl;
                 }
                 break;
@@ -250,17 +244,90 @@ void queryInsert(Insert &insert){
                         }
                     }
                     arbol->arbolAVL.verArbol(arbol->arbolAVL.getRaiz(), 0);
-                    cout<<"Cantidad de Datos: "<<arbol->arbolAVL.getCantidadDatosArbol()<<endl;
+//                    cout<<"Cantidad de Datos: "<<arbol->arbolAVL.getCantidadDatosArbol()<<endl;
                     cout<<""<<endl;
                 } else {
+                    ingresarAlLog(" ERROR: El dato: << " + insert.listaColumnas.GetNodo(i)->dato + " >> no corresponde al tipo de dato de la columna << " + insert.listaColumnas.GetNodo(i)->columna + " >>...");
                     cout<<"\nLo siento el dato: << "<<insert.listaColumnas.GetNodo(i)->dato<<" >> no corresponde al tipo de dato de la columna: << "<<insert.listaColumnas.GetNodo(i)->columna<<" >>"<<endl;
                 } cout<<"";
             } else {
+                ingresarAlLog(" ERROR: No existe la columna: << " + insert.listaColumnas.GetNodo(i)->columna + " >> en la tabla: << " + insert.GetNombreTabla() + " >>...");
                 cout<<"\nLo siento no existe la columna: << "<<insert.listaColumnas.GetNodo(i)->columna<<" >> en la tabla: << "<<insert.GetNombreTabla()<<" >>"<<endl;
             } cout<<"";
         } cout<<"";
     } else {
+        ingresarAlLog(" ERROR: No existe la tabla: << " + insert.GetNombreTabla() + " >> en la DB: << " + DBActual->nombreDB + " >>...");
         cout<<"\nLo siento no existe la tabla: << "<<insert.GetNombreTabla()<<" >> en la DB: << "<<DBActual->nombreDB<<" >>"<<endl;
+    } cout<<"";
+}
+
+void realizarSelect(Select &select, NodoTabla *aux, NodoColumna *auxColumna, ListaCadena &lista){
+    if (select.IsTodosCampos()) {//Significa que seleccionara todos las columnas
+        lista = ListaCadena();
+        if (select.IsSinCondicional()) {
+            for (int i = 0; i < aux->listaColumnas.size(); i++) {
+                auxColumna = aux->listaColumnas.GetNodo(i);
+                lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, "", false, 0), 0);
+            }
+        } else {
+            for (int i = 0; i < aux->listaColumnas.size(); i++) {//recorre la tabla hash
+                auxColumna = aux->listaColumnas.GetNodo(i);
+                if (auxColumna->nombreColumna == select.GetColumnaCodicion()) {//comprueba si es la misma columna
+                    lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, select.GetCondicional(), true, select.GetCondicion()), 0);
+                }
+            }
+            if (lista.size() == 0) {
+                ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
+                cout<<"Lo siento la columna << "<<select.GetColumnaCodicion()<<" >> no se encuntra en la tabla: << " <<select.GetNombreTabla();
+            }
+        } cout<<"";
+    } else {
+        lista = ListaCadena();
+        if (select.IsSinCondicional()) {
+            for (int i = 0; i < select.listaColumnas.size(); i++) {
+                auxColumna = aux->listaColumnas.buscarColumna(select.listaColumnas.GetNodo(i)->dato);
+                if (auxColumna != NULL) {
+                    lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, "", false, 0), 0);
+                } else {
+                    ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
+                    cout<<"\nLo siento no existe la columna: <<"<<select.listaColumnas.GetNodo(i)->dato<<">> en la tabla: << "<<select.GetNombreTabla()<<" >>"<<endl;
+                }
+            }
+        } else {
+            for (int i = 0; i < select.listaColumnas.size(); i++) {
+                auxColumna = aux->listaColumnas.buscarColumna(select.listaColumnas.GetNodo(i)->dato);
+                if (auxColumna->nombreColumna == select.GetColumnaCodicion()) {//comprueba si es la misma columna
+                    lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, select.GetCondicional(), true, select.GetCondicion()), 0);
+                }
+            }
+            if (lista.size() == 0) {
+                ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
+                cout<<"\nLo siento no existe la columna: << "<<select.GetColumnaCodicion()<<" >> en la tabla: << "<<select.GetNombreTabla()<<" >>"<<endl;
+            } cout<<"";
+        } cout<<"";
+    } cout<<"";
+}
+
+void querySelect(Select &select) {
+    NodoTabla *aux = DBActual->listaTablas.buscarTabla(select.GetNombreTabla());
+    NodoColumna *auxColumna;
+    ListaCadena lista;
+    if (aux != NULL) {
+        if (select.IsSinCondicional()) {
+            realizarSelect(select, aux, auxColumna, lista);
+            imprimirSelect(lista);
+        } else {
+            if (select.GetCondicion() != 0) {
+                realizarSelect(select, aux, auxColumna, lista);
+                imprimirSelect(lista);
+            } else {
+                ingresarAlLog(" ERROR: Condicional Incorrecta...");
+                cout<<"\nLo siento la condicional no es correcta vuelve a revisar tu entrada"<<endl;
+            } cout<<"";
+        }
+    } else {
+        ingresarAlLog(" ERROR: No existe la tabla: << " + select.GetNombreTabla() + " >> en la DB: << " + DBActual->nombreDB + " >>...");
+        cout<<"\nLo siento no existe la tabla: << "<<select.GetNombreTabla()<<" >> en la DB: << "<<DBActual->nombreDB<<" >>"<<endl;
     } cout<<"";
 }
 
@@ -276,11 +343,13 @@ void queryCrear(Create &crear) {
                 tabla->listaColumnas.insertarColumna(crear.lista.GetNodo(i)->dato, crear.lista.GetNodo(i)->tipoDato);
                 cout<<"Agregado"<<endl;
             } else {
+                ingresarAlLog(" ERROR: Ya existe la columna: << " + crear.lista.GetNodo(i)->dato + " >> en la tabla: << " + crear.GetNombreTabla() + " >>...");
                 cout<<"\nLa Columna: << "<<crear.lista.GetNodo(i)->dato<<" >> Ya existe en la tabla."<<endl;
             } 
         }
-        tabla->listaColumnas.desplegarColumnas();
+//        tabla->listaColumnas.desplegarColumnas();
     } else {
+        ingresarAlLog(" ERROR: Ya existe la tabla: << " + crear.GetNombreTabla() + " >> en la DB: << " + DBActual->nombreDB + " >>...");
         cout<<"\n Lo siento ya existe una tabla con el mismo nombre."<<endl;
     }
 }
@@ -293,8 +362,10 @@ void crearDB(){
         cout<<"\n<< CREANDO DB >>"<<endl;
         listaDB.insertarDB(nombreDB);
         cout<<"\n<< DB CREADO >>"<<endl;
+        ingresarAlLog(" Database << " + nombreDB + " >> Creado...");
         DBActual = listaDB.buscarDB(nombreDB);
     } else {
+        ingresarAlLog(" ERROR: Database ya Existe << " + nombreDB + " >>...");
         cout<<"\nLo siento ya existe una Base de Datos con el mismo nombre."<<endl;
     }
     menu();
@@ -308,7 +379,8 @@ void cambiarDB(){
     scanf("%d", &index);
     if (listaDB.GetNodo(index) != NULL) {
         DBActual = listaDB.GetNodo(index);
-    } 
+        ingresarAlLog(" Database << " + DBActual->nombreDB + " >> Cambiado...");
+    } cout<<"";
     menu();
 }
 
@@ -356,5 +428,64 @@ int colisionLineal(int llave, int sizeTablaHash) {
         return 0;
     } else {
         return (llave + 1);
+    }
+}
+
+
+void limpiarCadena(int size, ListaCadena &lista, vector<string> TempBuff){
+    for (int i = 0; i < size; i++) {
+        if (TempBuff[i] != "") {
+            lista.insertar(TempBuff[i], 0);
+        }
+    }
+}
+
+void imprimirSelect(ListaCadena &lista){
+    vector<string> TempBuff;
+    ListaCadena auxLista;
+    int size;
+    int aux;
+    if (lista.size() != 0) {
+        manejadorCadenas.split(lista.GetNodo(0)->dato, *"\n", TempBuff, aux);
+        limpiarCadena(aux, auxLista, TempBuff);
+        aux = auxLista.size();
+        for (int r = 0; r < aux; r++) {
+            for (int i = 0; i < lista.size(); i++) {//recorre toda la lista que contiene las columnas
+            manejadorCadenas.split(lista.GetNodo(i)->dato, *"\n", TempBuff, size);//splitea la cadena 
+            if (r == 0) {
+                if ((i + 1) == lista.size()) {
+                    cout<<TempBuff[r]<<endl;
+                } else {
+                    cout<<TempBuff[r]<<"\t\t";
+                }
+            } else {
+                if ((i + 1) == lista.size()) {
+                    cout<<TempBuff[r]<<endl;
+                } else {
+                    cout<<TempBuff[r]<<"\t\t\t";
+                }
+            }
+            } 
+        }
+    } else {
+        cout<<"\nNingun Dato Encontrado"<<endl;
+    }
+}
+
+void ingresarAlLog(string concatenar){
+    char fecha[25];
+    time_t current_time;
+    current_time = time(NULL);
+    ctime(&current_time);
+    strcpy(fecha, ctime(&current_time));
+    string salida = fecha;
+    logSalida += salida + "  " + concatenar + "\n";
+}
+
+void cantidadDatosDB(){
+    cout<<"\nGuatemala's Database: \n"<<endl;
+    for (int i = 0; i < listaDB.size(); i++) {
+        cout<<"DB: << "<<listaDB.GetNodo(i)->nombreDB<<" >> DATOS: ";
+        printf(listaDB.GetNodo(i)->listaTablas.cantidadDatos() + "\n");
     }
 }

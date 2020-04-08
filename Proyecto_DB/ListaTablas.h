@@ -39,6 +39,7 @@ public:
     void desplegarTabla();
     void SetPrimero(NodoTabla* primero);
     void SetUltimo(NodoTabla* ultimo);
+    int cantidadDatos();
 private:
     NodoTabla* primero;
     NodoTabla* ultimo;

@@ -156,6 +156,9 @@ void ManejadorQuery::select(string querySelect, ManejadorCadenas mc, Select &sel
             limpiarCadenaDeEspacios(0, tempLista.GetNodo(3)->dato);
             limpiarCadenaDeEspaciosFinales(tempLista.GetNodo(3)->dato);
             seleccionar.SetColumnaCodicion(tempLista.GetNodo(3)->dato);
+            limpiarCadenaDeEspacios(0, tempLista.GetNodo(4)->dato);
+            limpiarCadenaDeEspaciosFinales(tempLista.GetNodo(4)->dato);
+            seleccionar.SetCondicion(condicion(tempLista.GetNodo(4)->dato));
             remplazar(tempLista.GetNodo(5)->dato, ';', ' ');
             limpiarCadenaDeEspacios(0, tempLista.GetNodo(5)->dato);
             limpiarCadenaDeEspaciosFinales(tempLista.GetNodo(5)->dato);
@@ -221,7 +224,6 @@ void ManejadorQuery::limpiarCadenaDeEspaciosFinales(string &cadena){
 int ManejadorQuery::tipoDato(string dato) {
     remplazar(dato, ')', ' ');
     remplazar(dato, ';', ' ');
-//    cout<<"Tipo de Dato->"<<dato<<"<-Fin"<<endl;
     if (dato == "String" || dato == "string  " || dato == "String  " || dato == "string  ") {
 //        cout<<"String\n"<<endl;
         return 1;
@@ -234,5 +236,23 @@ int ManejadorQuery::tipoDato(string dato) {
     } else if (dato == "Double" || dato == "double" || dato == "Double  " || dato == "double  ") {
 //        cout<<"Double\n"<<endl;
         return 4;
+    }
+}
+
+int ManejadorQuery::condicion(string cadena){
+    if (cadena == "=") {
+        return 1;
+    } else if (cadena == "<") {
+        return 2;
+    } else if (cadena == ">") {
+        return 3;
+    } else if (cadena == "<=") {
+        return 4;
+    } else if (cadena == ">=") {
+        return 5;
+    } else if (cadena == "!=") {
+        return 6;
+    } else {
+        return 0;
     }
 }

@@ -31,6 +31,8 @@ public:
     int GetTipo() const;
     bool IsTodosCampos() const;
     bool IsSinCondicional() const;
+    int GetCondicion() const;
+    void SetCondicion(int);
     void SetSinCondicional(bool sinCondicional);
     void SetTodosCampos(bool todosCampos);
     void SetListaColumnas(const ListaCadena& listaColumnas);
@@ -42,6 +44,7 @@ private:
     string nombreTabla;
     string columnaCodicion;
     string condicional;
+    int condicion;//1. =, 2. <, 3. >, 4 <=, 5 >=, 6 !=
     bool todosCampos;
     bool sinCondicional;
     int tipo;    

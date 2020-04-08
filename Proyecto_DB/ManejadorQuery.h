@@ -28,6 +28,7 @@ public:
     ManejadorQuery(const ManejadorQuery& orig);
     virtual ~ManejadorQuery();
     int tipoDato(string);
+    int condicion(string);
     Create create(string, ManejadorCadenas);
     void remplazar(string &, char, char);
     void select(string, ManejadorCadenas, Select &);

@@ -30,6 +30,8 @@ public:
     NodoArbolAVL *GetUltimo() const;
     NodoArbolAVL *GetNodo(int);
     int size();
+    int cantidadDatos();
+    string datos(string, string, bool, int);
     void realizarReHashing();
     void insertarNuevaTupla();
     void eliminarTupla(NodoArbolAVL*&);

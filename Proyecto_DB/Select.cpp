@@ -74,3 +74,11 @@ bool Select::IsSinCondicional() const {
 void Select::SetSinCondicional(bool sinCondicional) {
     this->sinCondicional = sinCondicional;
 }
+
+int Select::GetCondicion() const {
+    return condicion;
+}
+
+void Select::SetCondicion(int condicion) {
+    this->condicion = condicion;
+}

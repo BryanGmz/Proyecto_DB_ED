@@ -137,3 +137,20 @@ void ListaHash::realizarReHashing() {
         this->insertarNuevaTupla();
     }
 }
+
+string ListaHash::datos(string columna, string cadenaCondicion, bool condicion, int tipo){
+    string retornar = "<< " + columna + " >>\n";
+    NodoArbolAVL *aux;
+    for (int i = 0; i < this->size(); i++) {
+        aux = this->GetNodo(i);
+        retornar += aux->arbolAVL.seleccionar(aux->arbolAVL.getRaiz(), cadenaCondicion, condicion, tipo);
+    }
+    return retornar;
+}
+
+int ListaHash::cantidadDatos(){
+    int retornar = 0;
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->arbolAVL.getCantidadDatosArbol();
+    } return retornar;
+}

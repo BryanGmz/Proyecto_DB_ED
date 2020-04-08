@@ -135,3 +135,10 @@ int ListaColumnas::size() {
         return 0;
     }
 }
+
+int ListaColumnas::cantidadDatos() {
+    int retornar = 0;
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->tablaHash.cantidadDatos();
+    } return retornar;
+}
