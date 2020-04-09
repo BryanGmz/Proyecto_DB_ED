@@ -70,29 +70,6 @@ int main(int argc, char** argv) {
     ingresarAlLog("Starting all servers...");
     ingresarAlLog("Starting Guatemala's Database...");
     menu();
-//    Arbol arbol = Arbol();
-//    string valor = "";
-//    string columna = "";
-//    
-//    int opcion = 1;
-//    while (opcion != 0) {
-////        cout<<"Ingresa valor:"<<endl;
-////        getline(cin, valor, '\n');
-////        cout<<"Ingresa columna:"<<endl;
-////        getline(cin, columna, '\n');
-//        int aux = 0;
-//        int contador = 0;
-//        cout<<"Ingrese Llave: "<<endl;
-//        scanf("%d", &contador);
-//        string s = static_cast<ostringstream*>(&(ostringstream() << contador))->str();
-//        arbol.ingresarDatosHoja(s, columna, contador);
-//        arbol.verArbol(arbol.getRaiz(), 0);
-//        string graphivz = "digraph G {\n\n" + arbol.graphivzArbol(arbol.getRaiz(), aux, "") + "\n}";
-//        cout<<graphivz<<endl;
-//        //        cout<<"Cantidad de Datos: "<<arbol.getCantidadDatosArbol()<<endl;
-////        arbol.inorden(arbol.getRaiz());
-//        contador++;
-//    }
     return 0;
 }
 
@@ -552,16 +529,43 @@ void cantidadFilasDeUnMismoTipo(){
 }
 
 void imprimirGraphviz(){
-    int contador = 0;
-    ofstream fs("archivo.dot");
-    string graphivz = "digraph G {\n\n";
-    graphivz += DBActual->nombreDB + "[shape=box];\n";
-    graphivz += "rankdir=LR;\n";
-    graphivz += "node [shape=record, width=.1, height=.1];\n\n";
-    graphivz += DBActual->listaTablas.graphvizTabla(contador, DBActual->nombreDB, false);
-    graphivz += "\n}";
-    fs<<graphivz<<endl;
-    fs.close();
-    system("dot -Tpng archivo.dot -o imagen.png");
-    system("nohup display ./imagen.png");
+    if (DBActual != NULL) {
+        int opcion = 0;
+        int contador = 0;
+        ofstream fs("archivo.dot");
+        string graphivz = "digraph G {\n\n";
+        graphivz += DBActual->nombreDB + "[shape=box];\n";
+        graphivz += "rankdir=LR;\n";
+        graphivz += "node [shape=record, width=.1, height=.1];\n\n";
+        cout<<"[ 1 ] Graficar toda la estructura de la DB << "<<DBActual->nombreDB<<" >>"<<endl;
+        cout<<"[ Cualquier otro número ] Graficar la estuctura de una tabla de la DB << "<<DBActual->nombreDB<<" >>"<<endl;
+        scanf("%d", &opcion);
+        if (opcion == 1) {
+            graphivz += DBActual->listaTablas.graphvizTabla(contador, DBActual->nombreDB, false, 0);
+            graphivz += "\n}";
+            fs<<graphivz<<endl;
+            fs.close();
+            system("dot -Tpng archivo.dot -o imagen.png");
+            system("nohup display ./imagen.png");
+        } else {
+            cout<<"Ingresa el numero de la tabla: "<<endl;
+            for (int i = 0; i < DBActual->listaTablas.size(); i++) {
+                cout<<"[ "<<(i+1)<<" ] Tabla << "<<DBActual->listaTablas.GetNodo(i)->nombreTabla<<" >>"<<endl;
+            }
+            scanf("%d", &opcion);
+            if (opcion < DBActual->listaTablas.size() && opcion > 0) {
+                graphivz += DBActual->listaTablas.graphvizTabla(contador, DBActual->nombreDB, true, (opcion - 1));
+                graphivz += "\n}";
+                fs<<graphivz<<endl;
+                fs.close();
+                system("dot -Tpng archivo.dot -o imagen.png");
+                system("nohup display ./imagen.png");
+            } else {
+                cout<<"Opcion No Valida..."<<endl;
+            }
+        }
+    } else {
+        cout<<"Lo siento debes de cargar una DB"<<endl;
+    }
+    menu();
 }

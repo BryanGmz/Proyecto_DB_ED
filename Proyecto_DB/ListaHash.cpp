@@ -25,7 +25,11 @@ ListaHash::ListaHash() {
 
 ListaHash::ListaHash(const ListaHash& orig) {}
 
-ListaHash::~ListaHash() {}
+ListaHash::~ListaHash() {
+    while (primero != NULL) {
+        eliminarTupla(primero);
+    }
+}
 
 NodoArbolAVL* ListaHash::GetPrimero() const {
     return primero;

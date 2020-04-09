@@ -21,7 +21,11 @@ ListaColumnas::ListaColumnas() {
 
 ListaColumnas::ListaColumnas(const ListaColumnas& orig) {}
 
-ListaColumnas::~ListaColumnas() {}
+ListaColumnas::~ListaColumnas() {
+    while (primero != NULL) {
+        eliminarColumna(primero);
+    }
+}
 
 NodoColumna* ListaColumnas::GetPrimero() const {
     return primero;
@@ -157,10 +161,13 @@ int ListaColumnas::cantidadFilas(int tipoDato) {
 
 string ListaColumnas::graphvizColumnas(int& contador, string nombreTabla) {
     string retornar = "";
+    string aux = "";
     for (int i = 0; i < this->size(); i++) {
-        retornar += this->GetNodo(i)->nombreColumna + "[shape=box];\n";
-        retornar += nombreTabla + " -> " + this->GetNodo(i)->nombreColumna + ";\n";
-        retornar += this->GetNodo(i)->nombreColumna + " -> " + "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0\n";
+        retornar += "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + "[label=\"<f0> " + this->GetNodo(i)->nombreColumna + "\"];\n";
+        aux = "node"+ static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0";
+        contador++;
+        retornar += nombreTabla + " -> " + aux + ";\n";
+        retornar += aux + " -> " + "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0\n";
         retornar += this->GetNodo(i)->tablaHash.graphivzHash(contador);
     } return retornar;
 }

@@ -20,7 +20,11 @@ ListaDeDB::ListaDeDB() {
 
 ListaDeDB::ListaDeDB(const ListaDeDB& orig) {}
 
-ListaDeDB::~ListaDeDB() {}
+ListaDeDB::~ListaDeDB() {
+    while (primero != NULL) {
+        eliminarDB(primero);
+    }
+}
 
 NodoDB* ListaDeDB::GetPrimero() const {
     return primero;

@@ -23,6 +23,9 @@ Arbol::Arbol(const Arbol& orig) {
 }
 
 Arbol::~Arbol() {
+    while (raiz != NULL) {
+        eliminarHoja(raiz);
+    }
 }
 
 int Arbol::getCantidadDatosArbol() const {
@@ -286,16 +289,6 @@ bool Arbol::comprobarExistencia(NodoHoja* recorrer, int datoBuscando) {
     }
 }
 
-//Recorrido preOrden
-void Arbol::preorden(NodoHoja *recorrer){//Mostrar
-    if (recorrer != NULL) {
-        cout<<"\nLlave: "<<recorrer->dato<<endl;
-        cout<<"Valor: "<<recorrer->valor<<endl;
-        preorden(recorrer->izquierdo);
-        preorden(recorrer->derecho);
-    }
-}
-
 string Arbol::graphivzArbol(NodoHoja* recorrer, int &contador, string sNodo) {
     if (recorrer != NULL) {
         string retornar = "";
@@ -483,28 +476,6 @@ bool Arbol::validarCondicion(string cadena, int tipoDato, string comprobacion, i
     } return false;
 }
 
-//Recorrido InOrden
-void Arbol::inorden(NodoHoja *recorrer){
-    if (recorrer != NULL) {
-    	inorden(recorrer->izquierdo);
-    	cout<<"\nLlave: "<<recorrer->dato<<endl;
-        cout<<"Valor: "<<recorrer->valor<<endl;
-        cout<<"Columna: "<<recorrer->columna<<endl;
-        inorden(recorrer->derecho);
-    }
-}
-
-//Recorrido postOrden
-void Arbol::postorden(NodoHoja *recorrer){
-    if (recorrer != NULL) {
-        postorden(recorrer->izquierdo);
-        postorden(recorrer->derecho);
-        cout<<"\nLlave: "<<recorrer->dato<<endl;
-        cout<<"Valor: "<<recorrer->valor<<endl;
-        cout<<"Columna: "<<recorrer->columna<<endl;
-    }
-}
-
 void Arbol::verArbol(NodoHoja *recorrer, int n){
     if(recorrer == NULL) {
         return; 
@@ -515,7 +486,6 @@ void Arbol::verArbol(NodoHoja *recorrer, int n){
         cout<< recorrer->dato <<endl;
         verArbol(recorrer->izquierdo, n + 1);
 }
-
 
 bool Arbol::buscarHoja(NodoHoja *recorrer, int llave){
     if (recorrer == NULL){
@@ -533,6 +503,16 @@ bool Arbol::buscarHoja(NodoHoja *recorrer, int llave){
             cout<<"Valor: "<<recorrer->valor<<endl;
             cout<<"Columna: "<<recorrer->columna<<endl;
             return true;
+        }
+    }
+}
+
+void Arbol::eliminarHoja(NodoHoja* recorrer) {
+    if (recorrer != NULL) { 	
+    	if (recorrer->dato == raiz->dato){
+            raiz = NULL;
+	} else {
+            recorrer = NULL;
         }
     }
 }

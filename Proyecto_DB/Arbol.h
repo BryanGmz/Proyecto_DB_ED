@@ -49,9 +49,6 @@ public:
     void agregarAtributosHoja(NodoHoja *&, string, string, int);
     bool comprobarExistencia(NodoHoja*, int);
     int calcularAltura(NodoHoja*);
-    void postorden(NodoHoja *);
-    void inorden(NodoHoja *);
-    void preorden(NodoHoja *);
     void verArbol(NodoHoja*, int);
     bool buscarHoja(NodoHoja *, int);
     int getCantidadDatosArbol() const;
@@ -61,6 +58,7 @@ public:
     bool decimal(string);
     int tipoDato(string);
     void setRaiz(NodoHoja* raiz);
+    void eliminarHoja(NodoHoja* recorrer);
     int charANumero(char);
     bool validarCondicion(string, int, string, int);
     string graphivzArbol(NodoHoja *, int &, string);

@@ -41,7 +41,7 @@ public:
     void SetUltimo(NodoTabla* ultimo);
     int cantidadDatos();
     int cantidadColumnas();
-    string graphvizTabla(int &, string, bool);
+    string graphvizTabla(int &, string, bool, int);
 private:
     NodoTabla* primero;
     NodoTabla* ultimo;

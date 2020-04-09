@@ -20,7 +20,11 @@ ListaTablas::ListaTablas() {
 
 ListaTablas::ListaTablas(const ListaTablas& orig) {}
 
-ListaTablas::~ListaTablas() {}
+ListaTablas::~ListaTablas() {
+    while (primero != NULL) {
+        eliminarTabla(primero);
+    }
+}
 
 NodoTabla* ListaTablas::GetPrimero() const {
     return primero;
@@ -149,11 +153,22 @@ int ListaTablas::cantidadColumnas() {
 
 }
 
-string ListaTablas::graphvizTabla(int &contador, string nombreDB, bool todosLasTablas) {
+string ListaTablas::graphvizTabla(int &contador, string nombreDB, bool todosLasTablas, int tabla) {
     string retornar = "";
-    for (int i = 0; i < this->size(); i++) {
-        retornar += this->GetNodo(i)->nombreTabla + "[shape=box];\n";
-        retornar += nombreDB + " -> " + this->GetNodo(i)->nombreTabla + ";\n";
-        retornar += this->GetNodo(i)->listaColumnas.graphvizColumnas(contador, this->GetNodo(i)->nombreTabla);
-    } return retornar;
+    if (todosLasTablas) {
+        for (int i = 0; i < this->size(); i++) {
+            if (tabla == i) {
+                 retornar += this->GetNodo(i)->nombreTabla + "[shape=box];\n";
+                retornar += nombreDB + " -> " + this->GetNodo(i)->nombreTabla + ";\n";
+                retornar += this->GetNodo(i)->listaColumnas.graphvizColumnas(contador, this->GetNodo(i)->nombreTabla);
+            }           
+        }
+    } else {
+        for (int i = 0; i < this->size(); i++) {
+            retornar += this->GetNodo(i)->nombreTabla + "[shape=box];\n";
+            retornar += nombreDB + " -> " + this->GetNodo(i)->nombreTabla + ";\n";
+            retornar += this->GetNodo(i)->listaColumnas.graphvizColumnas(contador, this->GetNodo(i)->nombreTabla);
+        }
+    }
+    return retornar;
 }
