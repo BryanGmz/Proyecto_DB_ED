@@ -138,5 +138,22 @@ int ListaTablas::cantidadDatos() {
     int retornar = 0;
     for (int i = 0; i < this->size(); i++) {
         retornar += this->GetNodo(i)->listaColumnas.cantidadDatos();
-    }
+    } return retornar;
+}
+
+int ListaTablas::cantidadColumnas() {
+    int retornar = 0;
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->listaColumnas.size();
+    } return retornar;
+
+}
+
+string ListaTablas::graphvizTabla(int &contador, string nombreDB, bool todosLasTablas) {
+    string retornar = "";
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->nombreTabla + "[shape=box];\n";
+        retornar += nombreDB + " -> " + this->GetNodo(i)->nombreTabla + ";\n";
+        retornar += this->GetNodo(i)->listaColumnas.graphvizColumnas(contador, this->GetNodo(i)->nombreTabla);
+    } return retornar;
 }

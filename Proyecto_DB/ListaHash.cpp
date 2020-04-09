@@ -13,6 +13,7 @@
 
 #include "ListaHash.h"
 #include "ListaCadena.h"
+#include <sstream>
 
 ListaHash::ListaHash() {
     this->primero = NULL;
@@ -152,5 +153,37 @@ int ListaHash::cantidadDatos(){
     int retornar = 0;
     for (int i = 0; i < this->size(); i++) {
         retornar += this->GetNodo(i)->arbolAVL.getCantidadDatosArbol();
+    } return retornar;
+}
+
+string ListaHash::graphivzHash(int &contador) {
+    string retornar = "";
+    int contadorAux = 0;
+    int cont = 1;
+    int contArboles = 0;
+    string auxNodoHashPrimer = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + "[label = \"";
+    string aux = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f";
+    contador++;
+    for (int i = 0; i < this->size(); i++) {
+        if (i == 0) {
+            auxNodoHashPrimer += "{<f" + static_cast<ostringstream*>(&(ostringstream() << contadorAux))->str();
+        } else {
+            auxNodoHashPrimer += "| {<f" + static_cast<ostringstream*>(&(ostringstream() << contadorAux))->str();   
+        }
+        contadorAux++;
+        auxNodoHashPrimer += "> " + static_cast<ostringstream*>(&(ostringstream() << i))->str();
+        auxNodoHashPrimer += " | <f" + static_cast<ostringstream*>(&(ostringstream() << contadorAux))->str() + ">}";
+        contadorAux++; 
+    }
+    auxNodoHashPrimer += "\"];";
+    retornar += auxNodoHashPrimer + "\n";
+    for (int i = 0; i < this->size(); i++) {
+        if (this->GetNodo(i)->arbolAVL.getCantidadDatosArbol() > 0) {
+            contArboles = contador;
+            retornar += this->GetNodo(i)->arbolAVL.graphivzArbol(this->GetNodo(i)->arbolAVL.getRaiz(), contador, "");
+            retornar += aux + static_cast<ostringstream*>(&(ostringstream() << (cont)))->str();
+            retornar += " ->  node" + static_cast<ostringstream*>(&(ostringstream() << (contArboles)))->str() + ":f0;\n";
+        } 
+        cont += 2;
     } return retornar;
 }

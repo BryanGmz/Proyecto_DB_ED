@@ -12,6 +12,7 @@
  */
 
 #include "Arbol.h"
+#include <sstream>
 
 Arbol::Arbol() {
     this->cantidadDatosArbol = 0;
@@ -53,7 +54,6 @@ bool Arbol::ingresarDatosHoja(string valor, string columna, int dato) {
         insertarHoja(recorrer, nuevaHoja, padreAnterior);
         return true;//Significa que a sido ingresado con exito
     } else {
-//        cout<<"Ya existe en el arbol"<<endl;
         return false;//Significa que hay una colision retorna false
     }
 }
@@ -291,10 +291,48 @@ void Arbol::preorden(NodoHoja *recorrer){//Mostrar
     if (recorrer != NULL) {
         cout<<"\nLlave: "<<recorrer->dato<<endl;
         cout<<"Valor: "<<recorrer->valor<<endl;
-//        cout<<"Columna: "<<recorrer->columna<<endl;
         preorden(recorrer->izquierdo);
         preorden(recorrer->derecho);
     }
+}
+
+string Arbol::graphivzArbol(NodoHoja* recorrer, int &contador, string sNodo) {
+    if (recorrer != NULL) {
+        string retornar = "";
+        string nodo = "";
+        string nodoAuxD= "";
+        string nodoAuxI= "";
+        if (recorrer == raiz) {
+            retornar += "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() +" [label = \"<f0> " + recorrer->valor + " \"];\n";
+            nodo = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0";
+            contador++;
+        } else {
+            nodo = sNodo;
+        }
+        if (recorrer->derecho != NULL) {
+            string nodoAux2 = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() +" [label = \"<f0> " + recorrer->derecho->valor + " \"];\n";
+            retornar += nodoAux2 + "\n";
+            nodoAuxD = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0";
+            retornar += nodo;
+            retornar += " -> ";
+            retornar += nodoAuxD;
+            retornar += ";\n";
+            contador++;
+        } 
+        if (recorrer->izquierdo != NULL) {
+            string nodoAux2 = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() +" [label = \"<f0> " + recorrer->izquierdo->valor + " \"];\n";
+            retornar += nodoAux2 + "\n";
+            nodoAuxI = "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0";
+            retornar += nodo;
+            retornar += " -> ";
+            retornar += nodoAuxI;
+            retornar += ";\n";
+            contador++;
+        } 
+        retornar += graphivzArbol(recorrer->izquierdo, contador, nodoAuxI);
+        retornar += graphivzArbol(recorrer->derecho, contador, nodoAuxD);
+        return retornar;
+    } return "";
 }
 
 int Arbol::tipoDato(string cadena){

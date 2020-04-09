@@ -31,6 +31,7 @@ public:
     NodoArbolAVL *GetNodo(int);
     int size();
     int cantidadDatos();
+    string graphivzHash(int &);
     string datos(string, string, bool, int);
     void realizarReHashing();
     void insertarNuevaTupla();

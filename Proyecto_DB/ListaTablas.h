@@ -40,6 +40,8 @@ public:
     void SetPrimero(NodoTabla* primero);
     void SetUltimo(NodoTabla* ultimo);
     int cantidadDatos();
+    int cantidadColumnas();
+    string graphvizTabla(int &, string, bool);
 private:
     NodoTabla* primero;
     NodoTabla* ultimo;

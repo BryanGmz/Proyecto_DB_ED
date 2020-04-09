@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 #include <iostream>
+
 #ifndef ARBOL_H
 #define ARBOL_H
 
@@ -62,6 +63,7 @@ public:
     void setRaiz(NodoHoja* raiz);
     int charANumero(char);
     bool validarCondicion(string, int, string, int);
+    string graphivzArbol(NodoHoja *, int &, string);
     string seleccionar(NodoHoja *, string, bool, int);
     //Retorna la lista seleccionada, la cadena de la condicional, bandera si viene con condicional, tiṕ de dato para realizar la comparacion
     

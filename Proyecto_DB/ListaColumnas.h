@@ -36,6 +36,8 @@ public:
     NodoColumna* buscarColumna(string);
     int size();
     int cantidadDatos();
+    int cantidadFilas(int);
+    string graphvizColumnas(int &, string);
     void insertarColumna(string, int);//Ingresar una nueva columna a la tabla
     void eliminarColumna(NodoColumna*&);
     void desplegarColumnas();

@@ -12,6 +12,7 @@
  */
 
 #include "ListaColumnas.h"
+#include <sstream>
 
 ListaColumnas::ListaColumnas() {
     this->primero = NULL;
@@ -140,5 +141,26 @@ int ListaColumnas::cantidadDatos() {
     int retornar = 0;
     for (int i = 0; i < this->size(); i++) {
         retornar += this->GetNodo(i)->tablaHash.cantidadDatos();
+    } return retornar;
+}
+
+int ListaColumnas::cantidadFilas(int tipoDato) {
+    int cantidad = 0;
+    for (int i = 0; i < size(); i++) {
+        if (this->GetNodo(i)->tipoDato == tipoDato) {
+            if (this->GetNodo(i)->tablaHash.cantidadDatos() > cantidad) {
+                cantidad += this->GetNodo(i)->tablaHash.cantidadDatos();
+            }
+        }
+    } return cantidad;
+}
+
+string ListaColumnas::graphvizColumnas(int& contador, string nombreTabla) {
+    string retornar = "";
+    for (int i = 0; i < this->size(); i++) {
+        retornar += this->GetNodo(i)->nombreColumna + "[shape=box];\n";
+        retornar += nombreTabla + " -> " + this->GetNodo(i)->nombreColumna + ";\n";
+        retornar += this->GetNodo(i)->nombreColumna + " -> " + "node" + static_cast<ostringstream*>(&(ostringstream() << contador))->str() + ":f0\n";
+        retornar += this->GetNodo(i)->tablaHash.graphivzHash(contador);
     } return retornar;
 }

@@ -19,6 +19,9 @@
 #include <ctime>
 #include <time.h>
 #include <cstring>
+#include <string>
+#include <sstream>
+#include <fstream>
 #include "ManejadorCadenas.h"
 #include "ManejadorHash.h"
 #include "ListaCadena.h"
@@ -45,6 +48,8 @@ void queryCrear(Create &crear);
 void queryInsert(Insert &insert);
 void querySelect(Select &select);
 void realizarSelect(Select &, NodoTabla *, NodoColumna *, ListaCadena &);
+void cantidadFilasDeUnMismoTipo();
+void imprimirGraphviz();
 int colisionLineal(int, int);
 bool comprobarElTipoDatoColumna(int, string);
 bool esCaracter(string);
@@ -65,7 +70,29 @@ int main(int argc, char** argv) {
     ingresarAlLog("Starting all servers...");
     ingresarAlLog("Starting Guatemala's Database...");
     menu();
-    
+//    Arbol arbol = Arbol();
+//    string valor = "";
+//    string columna = "";
+//    
+//    int opcion = 1;
+//    while (opcion != 0) {
+////        cout<<"Ingresa valor:"<<endl;
+////        getline(cin, valor, '\n');
+////        cout<<"Ingresa columna:"<<endl;
+////        getline(cin, columna, '\n');
+//        int aux = 0;
+//        int contador = 0;
+//        cout<<"Ingrese Llave: "<<endl;
+//        scanf("%d", &contador);
+//        string s = static_cast<ostringstream*>(&(ostringstream() << contador))->str();
+//        arbol.ingresarDatosHoja(s, columna, contador);
+//        arbol.verArbol(arbol.getRaiz(), 0);
+//        string graphivz = "digraph G {\n\n" + arbol.graphivzArbol(arbol.getRaiz(), aux, "") + "\n}";
+//        cout<<graphivz<<endl;
+//        //        cout<<"Cantidad de Datos: "<<arbol.getCantidadDatosArbol()<<endl;
+////        arbol.inorden(arbol.getRaiz());
+//        contador++;
+//    }
     return 0;
 }
 
@@ -79,9 +106,8 @@ void dbActual(){
 
 void menu() {
     int opcion;
-    
     ManejadorCadenas manejador = ManejadorCadenas();
-    while (opcion != 5) {
+    while (opcion != 6) {
         string query;
         dbActual();
         cout<<("\n|-------------------------------------------|");
@@ -91,7 +117,7 @@ void menu() {
         cout<<("\n|---------------------|---------------------|");
         cout<<("\n| 3. Cambiar DB       | 4. Crear DB         |");
         cout<<("\n|---------------------|---------------------|");
-        cout<<("\n| 5. Salir            |                     |");
+        cout<<("\n| 5. Graphviz         | 6. Salir            |");
         cout<<("\n|---------------------|---------------------|");
         cout<<("\n\n Escoja una Opcion: ");
         scanf("%d", &opcion);
@@ -117,8 +143,11 @@ void menu() {
                 crearDB();
                 break;
             case 5:
-                cout<<("\n\n Programa finalizado...\n\n");
+                imprimirGraphviz();
                 break;
+            case 6:
+                cout<<("\n\n Programa finalizado...\n\n");
+                exit(EXIT_SUCCESS);
             default:
                 string consumir;
                 cout<<("\n Opcion No Valida \n\n");
@@ -163,9 +192,10 @@ void menuReportes() {
                 }
                 break;
             case 3:
+                cantidadFilasDeUnMismoTipo();
                 break;
             case 4:
-                cout<<"\n\nDB: << "<<DBActual->nombreDB<<" >> Columnas: "<<DBActual->listaTablas.size()<<endl;
+                cout<<"\n\nDB: << "<<DBActual->nombreDB<<" >> Columnas: "<<DBActual->listaTablas.cantidadColumnas()<<endl;
                 break;
             case 5:
                 cout<<"\n\nArchivo Log..."<<endl<<endl;
@@ -233,7 +263,7 @@ void queryInsert(Insert &insert){
                         arbol = columnaIngresar->tablaHash.GetNodo(llave);//Para ver en que posicion se guarda
                         if (arbol != NULL) {
                             if (arbol->arbolAVL.ingresarDatosHoja(insert.listaColumnas.GetNodo(i)->dato, insert.listaColumnas.GetNodo(i)->columna, manejadorHash.dato(columnaIngresar->tipoDato, insert.listaColumnas.GetNodo(i)->dato))) {
-                                cout<<"\nDato: << "<<insert.listaColumnas.GetNodo(i)->dato<<" >> Ingresado a la Columna: << "<<insert.listaColumnas.GetNodo(i)->columna<<" >>"<<endl;
+                                cout<<"\nDato: << "<<insert.listaColumnas.GetNodo(i)->dato<<" >> Ingresado a la Columna: << "<<insert.listaColumnas.GetNodo(i)->columna<<" >>\n";
                                 columnaIngresar->tablaHash.realizarReHashing();//Comprueba si necesita realizarse un rehashing
                                 banderaFin = true;
                             } else {
@@ -244,7 +274,6 @@ void queryInsert(Insert &insert){
                         }
                     }
                     arbol->arbolAVL.verArbol(arbol->arbolAVL.getRaiz(), 0);
-//                    cout<<"Cantidad de Datos: "<<arbol->arbolAVL.getCantidadDatosArbol()<<endl;
                     cout<<""<<endl;
                 } else {
                     ingresarAlLog(" ERROR: El dato: << " + insert.listaColumnas.GetNodo(i)->dato + " >> no corresponde al tipo de dato de la columna << " + insert.listaColumnas.GetNodo(i)->columna + " >>...");
@@ -347,7 +376,6 @@ void queryCrear(Create &crear) {
                 cout<<"\nLa Columna: << "<<crear.lista.GetNodo(i)->dato<<" >> Ya existe en la tabla."<<endl;
             } 
         }
-//        tabla->listaColumnas.desplegarColumnas();
     } else {
         ingresarAlLog(" ERROR: Ya existe la tabla: << " + crear.GetNombreTabla() + " >> en la DB: << " + DBActual->nombreDB + " >>...");
         cout<<"\n Lo siento ya existe una tabla con el mismo nombre."<<endl;
@@ -431,7 +459,6 @@ int colisionLineal(int llave, int sizeTablaHash) {
     }
 }
 
-
 void limpiarCadena(int size, ListaCadena &lista, vector<string> TempBuff){
     for (int i = 0; i < size; i++) {
         if (TempBuff[i] != "") {
@@ -485,7 +512,56 @@ void ingresarAlLog(string concatenar){
 void cantidadDatosDB(){
     cout<<"\nGuatemala's Database: \n"<<endl;
     for (int i = 0; i < listaDB.size(); i++) {
-        cout<<"DB: << "<<listaDB.GetNodo(i)->nombreDB<<" >> DATOS: ";
-        printf(listaDB.GetNodo(i)->listaTablas.cantidadDatos() + "\n");
+        cout<<"DB: << "<<listaDB.GetNodo(i)->nombreDB<<" >> DATOS: "<<listaDB.GetNodo(i)->listaTablas.cantidadDatos()<<endl;
     }
+}
+
+void cantidadFilasDeUnMismoTipo(){
+    NodoTabla *auxTabla;
+    int opcion = 0;
+    cout<<"\nSelecciona la tabla: "<<endl;
+    for (int i = 0; i < DBActual->listaTablas.size(); i++) {
+        cout<<"[ "<<(DBActual->listaTablas.GetNodo(i)->indice + 1)<<" ]"<<" Tabla: "<<DBActual->listaTablas.GetNodo(i)->nombreTabla<<endl;
+    } 
+    scanf("%d", &opcion);
+    if (opcion <= DBActual->listaTablas.size()) {
+        auxTabla = DBActual->listaTablas.GetNodo((opcion - 1));
+        cout<<"\nSelecciona el Tipo de Dato: \n1. String \n2. Cadena \n3. Int \n4. Double\n";
+        scanf("%d", &opcion);
+        switch (opcion) {
+            case 1:
+                cout<<"\nTabla: << "<<auxTabla->nombreTabla<<" >> Cantidad de Filas de Tipo String: "<<auxTabla->listaColumnas.cantidadFilas(1);
+                break;
+            case 2:
+                cout<<"\nTabla: << "<<auxTabla->nombreTabla<<" >> Cantidad de Filas de Tipo Char: "<<auxTabla->listaColumnas.cantidadFilas(2);
+                break;
+            case 3:
+                cout<<"\nTabla: << "<<auxTabla->nombreTabla<<" >> Cantidad de Filas de Tipo Int: "<<auxTabla->listaColumnas.cantidadFilas(3);
+                break;
+            case 4:
+                cout<<"\nTabla: << "<<auxTabla->nombreTabla<<" >> Cantidad de Filas de Tipo Double: "<<auxTabla->listaColumnas.cantidadFilas(4);
+                break;
+            default:
+                string consumir;
+                cin>>consumir;
+                cout<<"\nOpción Invalida.";
+                break;
+        }
+    }
+    menu();
+}
+
+void imprimirGraphviz(){
+    int contador = 0;
+    ofstream fs("archivo.dot");
+    string graphivz = "digraph G {\n\n";
+    graphivz += DBActual->nombreDB + "[shape=box];\n";
+    graphivz += "rankdir=LR;\n";
+    graphivz += "node [shape=record, width=.1, height=.1];\n\n";
+    graphivz += DBActual->listaTablas.graphvizTabla(contador, DBActual->nombreDB, false);
+    graphivz += "\n}";
+    fs<<graphivz<<endl;
+    fs.close();
+    system("dot -Tpng archivo.dot -o imagen.png");
+    system("nohup display ./imagen.png");
 }
