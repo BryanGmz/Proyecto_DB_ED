@@ -108,6 +108,7 @@ void ListaTablas::eliminarTabla(NodoTabla *&eliminando) {
             actual = actual->siguiente;
         }
         if(encontrado != 0){
+            anterior->listaColumnas.~ListaColumnas();
             anterior = NULL;
         }
     }

@@ -124,6 +124,7 @@ void menu() {
                 break;
             case 6:
                 cout<<("\n\n Programa finalizado...\n\n");
+                listaDB.~ListaDeDB();
                 exit(EXIT_SUCCESS);
             default:
                 string consumir;

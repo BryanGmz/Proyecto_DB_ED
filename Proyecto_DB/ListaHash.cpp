@@ -107,6 +107,7 @@ void ListaHash::eliminarTupla(NodoArbolAVL *&eliminando) {
             actual = actual->siguiente;
         }
         if(encontrado != 0){
+            anterior->arbolAVL.~Arbol();
             anterior = NULL;
         }
     }

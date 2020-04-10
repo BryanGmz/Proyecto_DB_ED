@@ -113,6 +113,7 @@ void ListaDeDB::eliminarDB(NodoDB *&eliminando) {
             actual = actual->siguiente;
         }
         if(encontrado != 0){
+            anterior->listaTablas.~ListaTablas();
             anterior = NULL;
         }
     }

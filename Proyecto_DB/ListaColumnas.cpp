@@ -110,6 +110,7 @@ void ListaColumnas::eliminarColumna(NodoColumna *&eliminando) {
             actual = actual->siguiente;
         }
         if(encontrado != 0){
+            anterior->tablaHash.~ListaHash();
             anterior = NULL;
         }
     } 
