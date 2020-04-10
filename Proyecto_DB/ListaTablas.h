@@ -34,7 +34,7 @@ public:
     NodoTabla* GetNodo(int);
     NodoTabla* buscarTabla(string);
     int size();
-    void insertarTabla(string);//Ingresar una nueva tabla a la lista
+    void insertarTabla(string);
     void eliminarTabla(NodoTabla*&);
     void desplegarTabla();
     void SetPrimero(NodoTabla* primero);

@@ -1,4 +1,4 @@
-build: main.o Arbol.o Create.o Insert.o ListaCadena.o ListaColumnas.o ListaDeDB.o ListaHash.o ListaTablas.o ManejadorCadenas.o ManejadorHash.o ManejadorQuery.o Select.o
+Proyecto_DB: main.o Arbol.o Create.o Insert.o ListaCadena.o ListaColumnas.o ListaDeDB.o ListaHash.o ListaTablas.o ManejadorCadenas.o ManejadorHash.o ManejadorQuery.o Select.o
 	g++ main.o Arbol.o Create.o Insert.o ListaCadena.o ListaColumnas.o ListaDeDB.o ListaHash.o ListaTablas.o ManejadorCadenas.o ManejadorHash.o ManejadorQuery.o Select.o -o Proyecto_DB 
 	./Proyecto_DB 
 
@@ -40,3 +40,6 @@ ManejadorQuery.o: ManejadorQuery.cpp ManejadorQuery.h
 
 Select.o: Select.cpp Select.h
 	g++ -c Select.cpp
+
+clear: 
+	rm -rf *o Proyecto_DB
