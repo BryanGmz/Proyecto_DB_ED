@@ -31,8 +31,8 @@ int ManejadorCadenas::cuenta(string s, const char separadorCte, int &totalCaract
         if (s[i] == separadorCte) totalCaracteres++;
 }
 
-void ManejadorCadenas::split(string linea, char separador, vector<string> &tempBuff, int &tamanioVector) {
-    tempBuff.resize(0);
+void ManejadorCadenas::split(string linea, char separador, ListaCadena &tempBuff, int &tamanioVector) {
+    tempBuff.~ListaCadena();
     tamanioVector = 0;
     int numero = -1;
     int numeroPosicion = -1;
@@ -47,12 +47,12 @@ void ManejadorCadenas::split(string linea, char separador, vector<string> &tempB
             valorNumero = linea.find(separador, numeroPosicion + 1);
             valor = linea.substr(numeroPosicion + 1,valorNumero);
             valor = valor.substr(0, valor.find_first_of(separador));
-            tempBuff.push_back(valor);
+            tempBuff.insertar(valor, 0);
             numeroPosicion = valorNumero;
             totalEspacios++;
-        }
+        } cout<<"";
         tamanioVector = tempBuff.size();
     } else {
         tamanioVector = 0;
-    }
+    } cout<<"";
 }

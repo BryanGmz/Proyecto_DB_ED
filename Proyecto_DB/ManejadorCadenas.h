@@ -13,7 +13,6 @@
 //
 #include <cstdlib>
 #include <iostream>
-#include <vector>
 #include "ListaCadena.h"
 #ifndef MANEJADORCADENAS_H
 #define MANEJADORCADENAS_H
@@ -25,7 +24,7 @@ public:
     ManejadorCadenas();
     ManejadorCadenas(const ManejadorCadenas& orig);
     int cuenta(string, const char, int&);
-    void split(string, char , vector<string>& , int&);
+    void split(string, char , ListaCadena& , int&);
     virtual ~ManejadorCadenas();
 private:
 

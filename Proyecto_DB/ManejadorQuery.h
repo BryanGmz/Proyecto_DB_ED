@@ -32,7 +32,7 @@ public:
     Create create(string, ManejadorCadenas);
     void remplazar(string &, char, char);
     void select(string, ManejadorCadenas, Select &);
-    void insertarALista(int, ListaCadena &, vector<string>);
+    void insertarALista(int, ListaCadena &, ListaCadena &);
     void insert(string, ManejadorCadenas mc, Insert &);
     void realizarTerceraParte(string, Insert &, ManejadorCadenas);
     void limpiarCadenaDeEspacios(int, string &);

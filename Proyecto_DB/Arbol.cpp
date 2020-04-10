@@ -99,17 +99,15 @@ void Arbol::insertarHoja(NodoHoja *recorrer, NodoHoja* nuevaHoja, NodoHoja *Padr
 void Arbol::equilibrar(NodoHoja *recorrer) {
     if (recorrer != NULL) {
         if ((recorrer->fe == 2) || (recorrer->fe == -2))  {//Significa que es necesario equilibrar el arbol
-            cout<<"Es necesario equilibrar el arbol"<<endl;
+            cout<<"Es necesario equilibrar el arbol..."<<endl;
             NodoHoja *PadreAnterior = recorrer;
             NodoHoja *hijo = PadreAnterior->derecho;//Comprobando del lado derecho
             if ((PadreAnterior->fe > 1) && (hijo->fe > 0)) {//Comprobar si se necesita Rotacion Simple a la izquierda
                 cout<<"Rotacion Simple a la Izquierda."<<endl;
-                cout<<" Padre: "<<PadreAnterior->dato<<" Hijo: "<<hijo->dato<<endl;
                 rotarDD(PadreAnterior, hijo); 
                 return;
             } else if((PadreAnterior->fe > 1) && (hijo->fe < 0)){//Comprobar si se necesita Rotacion Derecha, Izquierda 
                 cout<<"Rotacion derecha izquierda."<<endl;
-                cout<<" Padre: "<<PadreAnterior->dato<<" Hijo: "<<hijo->dato<<endl;
                 rotarDI(PadreAnterior, hijo);
                 return;
             } else {//Inciar comprobacion de equilibrio del lado izquierdo
@@ -117,12 +115,10 @@ void Arbol::equilibrar(NodoHoja *recorrer) {
                 hijo = PadreAnterior->izquierdo;//Comprobar del lado izquierdo
                 if ((PadreAnterior->fe < -1) && (hijo->fe < 0)) {//Comprobar si necesita Rotacion Simple a la Derecha
                     cout<<"Rotacion Simple a la Derecha."<<endl;
-                    cout<<" Padre: "<<PadreAnterior->dato<<" Hijo: "<<hijo->dato<<endl;
                     rotarII(PadreAnterior, hijo);
                     return;
                 } else if((PadreAnterior->fe < -1) && (hijo->fe > 0)) {//Comprobar si necesita Rotacion Izquierda Derecha
                     cout<<"Rotacion izquierda derecha."<<endl;
-                    cout<<" Padre: "<<PadreAnterior->dato<<" Hijo: "<<hijo->dato<<endl;
                     rotarID(PadreAnterior, hijo);
                     return;
                 }

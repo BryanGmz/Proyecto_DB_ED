@@ -1,0 +1,12 @@
+CREATE TABLE tabla (Columna_1 String, Columna_2 Int, Columna_3 Char, Columna_4 Double);
+CREATE TABLE Tbal (Columna_1 String, Columna_2 Int, Columna_3 Char, Columna_4 Double);
+
+SELECT Columna_1, Columna_2, Columna_3, Columna_4 FROM tabla WHERE Columna_2 != 50;
+SELECT Columna_1 FROM usuarios Columna_1 >= cola;
+SELECT * FROM tebka WHERE Columna_4 = 0.3;
+SELECT nombre, edad, tel FROM usuarios;
+SELECT Columna_1, Columna_2 FROM tabla;
+SELECT * FROM tabla;
+INSERT INTO tabla (Columna_1, Columna_2, Columna_3, Columna_4) VALUES (cola, 2, A, 0.3);
+INSERT INTO tabla (Columna_1, Columna_2, Columna_3, Columna_4) VALUES (bola, 7, B, 0.8);
+INSERT INTO tabla (Columna_1, Columna_2, Columna_3, Columna_4) VALUES (hola, 12, a, 1.3);

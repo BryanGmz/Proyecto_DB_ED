@@ -56,7 +56,7 @@ bool esCaracter(string);
 bool esDecimal(string);
 bool esNumero(string);
 void imprimirSelect(ListaCadena &);
-void limpiarCadena(int, ListaCadena &, vector<string>);
+void limpiarCadena(int, ListaCadena &, ListaCadena&);
 void ingresarAlLog(string concatenar);
 void cantidadDatosDB();
 ListaDeDB listaDB = ListaDeDB();
@@ -108,7 +108,7 @@ void menu() {
                     querys(query, manejador);
                 } else {
                     cout<<"\n ERROR: Debes de Seleccionar una DB"<<endl;
-                }                
+                } cout<<"";             
                 break;
             case 2:
                 menuReportes();
@@ -215,11 +215,11 @@ void querys(string valor, ManejadorCadenas mc){
                 } else {
                     ingresarAlLog(" ERROR: Query Instruccion Incorrecta << " + valor + " >>...");
                     cout<<" ERROR: Instruccion Incorecta.\n Vuelve a revisar tu entrada."<<endl;
-                }
+                } cout<<"";
                 break;
-            }
-        }
-    } 
+            } cout<<"";
+        } cout<<"";
+    } cout<<"";
     cout<<"\nQuery Ejecutada\n"<<endl;
     manejadorQuery.~ManejadorQuery();
     menu();
@@ -246,11 +246,11 @@ void queryInsert(Insert &insert){
                                 banderaFin = true;
                             } else {
                                 llave = colisionLineal(llave, columnaIngresar->tablaHash.size());
-                            }
+                            } cout<<"";
                         } else {
                             llave = colisionLineal(llave, columnaIngresar->tablaHash.size());
-                        }
-                    }
+                        } cout<<"";
+                    } cout<<"\nArbol: "<<endl<<endl;
                     arbol->arbolAVL.verArbol(arbol->arbolAVL.getRaiz(), 0);
                     cout<<""<<endl;
                 } else {
@@ -275,18 +275,18 @@ void realizarSelect(Select &select, NodoTabla *aux, NodoColumna *auxColumna, Lis
             for (int i = 0; i < aux->listaColumnas.size(); i++) {
                 auxColumna = aux->listaColumnas.GetNodo(i);
                 lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, "", false, 0), 0);
-            }
+            } cout<<"";
         } else {
             for (int i = 0; i < aux->listaColumnas.size(); i++) {//recorre la tabla hash
                 auxColumna = aux->listaColumnas.GetNodo(i);
                 if (auxColumna->nombreColumna == select.GetColumnaCodicion()) {//comprueba si es la misma columna
                     lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, select.GetCondicional(), true, select.GetCondicion()), 0);
-                }
-            }
+                } cout<<"";
+            } cout<<"";
             if (lista.size() == 0) {
                 ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
                 cout<<"Lo siento la columna << "<<select.GetColumnaCodicion()<<" >> no se encuntra en la tabla: << " <<select.GetNombreTabla();
-            }
+            } cout<<"";
         } cout<<"";
     } else {
         lista = ListaCadena();
@@ -298,15 +298,15 @@ void realizarSelect(Select &select, NodoTabla *aux, NodoColumna *auxColumna, Lis
                 } else {
                     ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
                     cout<<"\nLo siento no existe la columna: <<"<<select.listaColumnas.GetNodo(i)->dato<<">> en la tabla: << "<<select.GetNombreTabla()<<" >>"<<endl;
-                }
-            }
+                } cout<<"";
+            } cout<<"";
         } else {
             for (int i = 0; i < select.listaColumnas.size(); i++) {
                 auxColumna = aux->listaColumnas.buscarColumna(select.listaColumnas.GetNodo(i)->dato);
                 if (auxColumna->nombreColumna == select.GetColumnaCodicion()) {//comprueba si es la misma columna
                     lista.insertar(auxColumna->tablaHash.datos(auxColumna->nombreColumna, select.GetCondicional(), true, select.GetCondicion()), 0);
-                }
-            }
+                } cout<<"";
+            } cout<<"";
             if (lista.size() == 0) {
                 ingresarAlLog(" ERROR: No existe la columna: << " + select.GetColumnaCodicion()+ " >> en la tabla: << " + select.GetNombreTabla() + " >>...");
                 cout<<"\nLo siento no existe la columna: << "<<select.GetColumnaCodicion()<<" >> en la tabla: << "<<select.GetNombreTabla()<<" >>"<<endl;
@@ -437,16 +437,16 @@ int colisionLineal(int llave, int sizeTablaHash) {
     }
 }
 
-void limpiarCadena(int size, ListaCadena &lista, vector<string> TempBuff){
+void limpiarCadena(int size, ListaCadena &lista, ListaCadena &TempBuff){
     for (int i = 0; i < size; i++) {
-        if (TempBuff[i] != "") {
-            lista.insertar(TempBuff[i], 0);
+        if (TempBuff.GetNodo(i)->dato != "") {
+            lista.insertar(TempBuff.GetNodo(i)->dato, 0);
         }
     }
 }
 
 void imprimirSelect(ListaCadena &lista){
-    vector<string> TempBuff;
+    ListaCadena TempBuff;
     ListaCadena auxLista;
     int size;
     int aux;
@@ -459,22 +459,25 @@ void imprimirSelect(ListaCadena &lista){
             manejadorCadenas.split(lista.GetNodo(i)->dato, *"\n", TempBuff, size);//splitea la cadena 
             if (r == 0) {
                 if ((i + 1) == lista.size()) {
-                    cout<<TempBuff[r]<<endl;
+                    cout<<TempBuff.GetNodo(r)->dato<<endl;
                 } else {
-                    cout<<TempBuff[r]<<"\t\t";
-                }
+                    cout<<TempBuff.GetNodo(r)->dato<<"\t\t";
+                } cout<<"";
             } else {
                 if ((i + 1) == lista.size()) {
-                    cout<<TempBuff[r]<<endl;
+                    cout<<TempBuff.GetNodo(r)->dato<<endl;
                 } else {
-                    cout<<TempBuff[r]<<"\t\t\t";
-                }
-            }
-            } 
-        }
+                    cout<<TempBuff.GetNodo(r)->dato<<"\t\t\t";
+                } cout<<"";
+            } cout<<"";
+            }  cout<<"";
+        } cout<<"";
+        auxLista.~ListaCadena();
     } else {
+        auxLista.~ListaCadena();
         cout<<"\nNingun Dato Encontrado"<<endl;
-    }
+    } cout<<"";
+    TempBuff.~ListaCadena();
 }
 
 void ingresarAlLog(string concatenar){

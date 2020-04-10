@@ -1,42 +1,64 @@
 digraph G {
 
-DB[shape=box];
+1[shape=box];
 rankdir=LR;
 node [shape=record, width=.1, height=.1];
 
 tabla[shape=box];
-DB -> tabla;
+1 -> tabla;
 node0[label="<f0> Columna_1"];
 tabla -> node0:f0;
 node0:f0 -> node1:f0
 node1[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
-node2 [label = "<f0> cola "];
-node1:f7 ->  node2:f0;
+node2 [label = "<f0> bola "];
+node1:f5 ->  node2:f0;
 node3 [label = "<f0> cola "];
-node1:f9 ->  node3:f0;
-node4[label="<f0> Columna_2"];
-tabla -> node4:f0;
-node4:f0 -> node5:f0
-node5[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
-node6 [label = "<f0> 2 "];
-node5:f5 ->  node6:f0;
-node7 [label = "<f0> 2 "];
-node5:f7 ->  node7:f0;
-node8[label="<f0> Columna_3"];
-tabla -> node8:f0;
-node8:f0 -> node9:f0
-node9[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
-node10 [label = "<f0> A "];
-node9:f1 ->  node10:f0;
-node11 [label = "<f0> A "];
-node9:f3 ->  node11:f0;
-node12[label="<f0> Columna_4"];
+node4 [label = "<f0> hola "];
+
+node3:f0 -> node4:f0;
+node1:f7 ->  node3:f0;
+node5 [label = "<f0> cola "];
+node1:f9 ->  node5:f0;
+node6[label="<f0> Columna_2"];
+tabla -> node6:f0;
+node6:f0 -> node7:f0
+node7[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
+node8 [label = "<f0> 7 "];
+node9 [label = "<f0> 12 "];
+
+node8:f0 -> node9:f0;
+node10 [label = "<f0> 2 "];
+
+node8:f0 -> node10:f0;
+node7:f5 ->  node8:f0;
+node11 [label = "<f0> 2 "];
+node7:f7 ->  node11:f0;
+node12[label="<f0> Columna_3"];
 tabla -> node12:f0;
 node12:f0 -> node13:f0
 node13[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
-node14 [label = "<f0> 0.3 "];
-node13:f7 ->  node14:f0;
-node15 [label = "<f0> 0.3 "];
-node13:f9 ->  node15:f0;
+node14 [label = "<f0> A "];
+node13:f1 ->  node14:f0;
+node15 [label = "<f0> B "];
+node16 [label = "<f0> A "];
+
+node15:f0 -> node16:f0;
+node13:f3 ->  node15:f0;
+node17 [label = "<f0> a "];
+node13:f5 ->  node17:f0;
+node18[label="<f0> Columna_4"];
+tabla -> node18:f0;
+node18:f0 -> node19:f0
+node19[label = "{<f0> 0 | <f1>}| {<f2> 1 | <f3>}| {<f4> 2 | <f5>}| {<f6> 3 | <f7>}| {<f8> 4 | <f9>}"];
+node20 [label = "<f0> 0.3 "];
+node21 [label = "<f0> 0.8 "];
+
+node20:f0 -> node21:f0;
+node19:f7 ->  node20:f0;
+node22 [label = "<f0> 1.3 "];
+node23 [label = "<f0> 0.3 "];
+
+node22:f0 -> node23:f0;
+node19:f9 ->  node22:f0;
 
 }
